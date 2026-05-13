@@ -22,7 +22,6 @@
         @endif
 
         <form action="{{ route('students.update', $student->id) }}" method="POST" class="space-y-5">
-            <!-- containing a secure,random token. -->
             @csrf 
             @method('PUT')
 
@@ -63,12 +62,12 @@
                 <label class="block text-sm font-semibold text-slate-700 mb-1">Course</label>
                 <select name="course" id="course" class="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
                     <option value="select" {{ old('course') == 'select' ? 'selected' : '' }}>- Select -</option>
-                    <option value="Other" {{ old('course') == 'Other' ? 'selected' : '' }}>- Other -</option>
-                    <option value="BCA" {{ old('course') == 'BCA' ? 'selected' : '' }}>- BCA -</option>
-                    <option value="MCA" {{ old('course') == 'MCA' ? 'selected' : '' }}>- MCA -</option>
-                    <option value="Diploma" {{ old('course') == 'Diploma' ? 'selected' : '' }}>- Diploma -</option>
-                    <option value="B.com" {{ old('course') == 'B.com' ? 'selected' : '' }}>- B.com -</option>
-                    <option value="M.com" {{ old('course') == 'M.com' ? 'selected' : '' }}>- M.com -</option>
+                    <option value="Other" {{ old('course',$student->course) == 'Other' ? 'selected' : '' }}>- Other -</option>
+                    <option value="BCA" {{ old('course',$student->course) == 'BCA' ? 'selected' : '' }}>- BCA -</option>
+                    <option value="MCA" {{ old('course',$student->course) == 'MCA' ? 'selected' : '' }}>- MCA -</option>
+                    <option value="Diploma" {{ old('course',$student->course) == 'Diploma' ? 'selected' : '' }}>- Diploma -</option>
+                    <option value="B.com" {{ old('course',$student->course) == 'B.com' ? 'selected' : '' }}>- B.com -</option>
+                    <option value="M.com" {{ old('course',$student->course) == 'M.com' ? 'selected' : '' }}>- M.com -</option>
                 </select>            
             </div>
 
@@ -90,34 +89,40 @@
                 </div>           
             </div>
 
-            <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-2">Hobbies</label>
+       <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Hobbies</label>
                 <div class="flex flex-wrap gap-4">
                     @php
-                        $currentHobbies = is_array($student->hobbies) ? $student->hobbies : json_decode($student->hobbies, true) ?? [];
+                    $currentHobbies = is_array($student->hobbies) ? $student->hobbies : json_decode($student->hobbies, true) ?? [];
                     @endphp
-                    <label class="inline-flex items-center text-slate-800 cursor-pointer">
-                        <input type="checkbox" name="hobbies[]" value="Reading" {{ in_array('Reading', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
-                        <span class="ml-2 text-sm">Reading</span>
-                    </label>
-                    <label class="inline-flex items-center text-slate-800 cursor-pointer">
-                        <input type="checkbox" name="hobbies[]" value="Travelling" {{ in_array('Gaming', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
-                        <span class="ml-2 text-sm">Travelling</span>
-                    </label>
-                    <label class="inline-flex items-center text-slate-800 cursor-pointer">
-                        <input type="checkbox" name="hobbies[]" value="Singing" {{ in_array('Coding', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
-                        <span class="ml-2 text-sm">Singing</span>
-                    </label>
-                    <label class="inline-flex items-center text-slate-800 cursor-pointer">
-                        <input type="checkbox" name="hobbies[]" value="Dancing" {{ in_array('Coding', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
-                        <span class="ml-2 text-sm">Dancing</span>
-                    </label>
-                    <label class="inline-flex items-center text-slate-800 cursor-pointer">
-                        <input type="checkbox" name="hobbies[]" value="Other" {{ in_array('Coding', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
-                        <span class="ml-2 text-sm">Other</span>
-                    </label>
+
+                        <label class="inline-flex items-center text-slate-800 cursor-pointer">
+                            <input type="checkbox" name="hobbies[]" value="Reading" {{ in_array('Reading', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
+                            <span class="ml-2 text-sm">Reading</span>
+                        </label>
+
+                        <label class="inline-flex items-center text-slate-800 cursor-pointer">
+                            <input type="checkbox" name="hobbies[]" value="Travelling" {{ in_array('Travelling', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
+                            <span class="ml-2 text-sm">Travelling</span>
+                        </label>
+
+                        <label class="inline-flex items-center text-slate-800 cursor-pointer">
+                            <input type="checkbox" name="hobbies[]" value="Singing" {{ in_array('Singing', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
+                            <span class="ml-2 text-sm">Singing</span>
+                        </label>
+
+                        <label class="inline-flex items-center text-slate-800 cursor-pointer">
+                            <input type="checkbox" name="hobbies[]" value="Dancing" {{ in_array('Dancing', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
+                            <span class="ml-2 text-sm">Dancing</span>
+                        </label>
+
+       
+                        <label class="inline-flex items-center text-slate-800 cursor-pointer">
+                            <input type="checkbox" name="hobbies[]" value="Other" {{ in_array('Other', old('hobbies', $currentHobbies)) ? 'checked' : '' }} class="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500">
+                            <span class="ml-2 text-sm">Other</span>
+                        </label>
                 </div>
-            </div>
+        </div>
 
             <div class="pt-5  border-slate-200 flex justify-end space-x-3">
                 <a href="{{ route('students.create') }}" class="bg-slate-500 hover:bg-slate-600 text-white font-medium text-sm py-2 px-4 rounded-lg transition duration-150 shadow-xs">

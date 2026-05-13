@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $('#age_input').on('focus', function() {
-        $('#age-error').hide();
+    $('#age_input').on('focusout', function() {
+       $('#age-error').hide();
     });
 });
+

@@ -10,7 +10,7 @@ class StudentController extends Controller
     
     public function create()
     {
-        $students = Student::all(); 
+        $students = Student::get(); 
         return view('students.create', compact('students'));
         info('table data shows under the form');
     }
@@ -18,14 +18,14 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:255'],
             'email' => 'required|email|unique:students,email',
             'age' => 'required|integer|between:5,15', 
             'gender' => 'required|string|in:Male,Female,Other',
             'course' => 'required|string|in:Other,BCA,MCA,Diploma,B.com,M.com',
             'skills' => 'required|string|in:Beginner,Intermediate,Advanced',
             'hobbies' => 'required|array|min:1',
-            'hobbies.*' => 'string',
+            'hobbies.*' => 'string',//look inside the array and inspect every single item individually."
             'terms' => 'accepted',
         ]);
         info('validate input data');
@@ -45,6 +45,9 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $stud = Student::findOrFail($id); 
+        if(empty($stud)){
+            return redirect()->back()->with('error','student id not found');
+        }
         $stud->delete(); 
         info('delete data successfully');
         return redirect()->back()->with('success', 'Item deleted successfully!');
@@ -52,6 +55,9 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::findOrFail($id);
+        if(empty($student)){
+            return redirect()->back()->with('error','student id not found!');
+        }
         return view('students.edit', compact('student'));
         info('shows edit page');
     }
@@ -59,6 +65,10 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $student = Student::findOrFail($id);
+        if(empty($student))
+        {
+            return redirect()->back()->with('error','student id not found!');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',

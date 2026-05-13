@@ -11,11 +11,7 @@
 <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-6 text-center">Student Details Form</h2>
 
-    @if(session('success'))
-        <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
+    
 
     <form action="{{ route('students.store') }}" method="POST" class="space-y-6">
         <!-- to protect your application against Cross-Site Request Forgery (CSRF) attacks   -->
@@ -109,6 +105,11 @@
             Submit
         </button>
     </form>
+    @if(session('success'))
+        <div class="mb-4 p-4  text-green-700 rounded">
+            {{ session('success') }}
+        </div>
+    @endif
 </div>
 
 @if(isset($students) && $students->count() > 0)
@@ -140,14 +141,14 @@
                         <td class="px-4 py-2 border">{{ $student->skills }}</td>
                         <td class="px-4 py-2 border">{{ implode(', ', $student->hobbies) }}</td>
                         <td class="px-4 py-2 border">
-                            <a href="{{ route('students.edit', $student->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded text-sm transition duration-150 inline-block">
+                            <a href="{{ route('students.edit', $student->id) }}" class="bg-yellow-500  text-white font-bold py-1 px-3 rounded text-sm transition duration-150 inline-block">
                                 Edit</a>
                         </td>
                         <td class="px-4 py-2 border">
                             <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm transition duration-150">
+                                <button type="submit" class="bg-red-500  text-white font-bold py-1 px-3 rounded text-sm transition duration-150">
                                     Delete
                                 </button>
                             </form>
@@ -158,6 +159,6 @@
         </table>
     </div>
 @endif
-    <script src="{{ asset('resources/js/app.js') }}"></script>
+    <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 </body>
 </html>
