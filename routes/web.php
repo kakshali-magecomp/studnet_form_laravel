@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Student;
 
 
 Route::get('/', [StudentController::class, 'create'])->name('students.create');
